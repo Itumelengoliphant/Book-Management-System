@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BookAppDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Gender1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Student_Gender" FromRole="Gender" ToRole="Student" />
+    <NavigationProperty Name="Users" Relationship="BookAppDbModel.FK_User_Gender" FromRole="Gender" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Institution">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TypeId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="InstitutionType" Relationship="Self.FK_Institution_InstitutionType" FromRole="Institution" ToRole="InstitutionType" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Student_Institution" FromRole="Institution" ToRole="Student" />
+    <NavigationProperty Name="Books" Relationship="BookAppDbModel.FK_Book_Institution" FromRole="Institution" ToRole="Book" />
+    <NavigationProperty Name="Campus" Relationship="BookAppDbModel.FK_Campus_Institution" FromRole="Institution" ToRole="Campu" />
+    <NavigationProperty Name="Users" Relationship="BookAppDbModel.FK_User_Institution" FromRole="Institution" ToRole="User" />
+  </EntityType>
+  <EntityType Name="InstitutionType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Institutions" Relationship="Self.FK_Institution_InstitutionType" FromRole="InstitutionType" ToRole="Institution" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StudentNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GenderId" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <Property Name="IdentityNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Gender" Relationship="Self.FK_Student_Gender" FromRole="Student" ToRole="Gender" />
+    <NavigationProperty Name="Institution" Relationship="Self.FK_Student_Institution" FromRole="Student" ToRole="Institution" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Student_Gender">
+    <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="GenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Institution_InstitutionType">
+    <End Role="InstitutionType" Type="Self.InstitutionType" Multiplicity="1" />
+    <End Role="Institution" Type="Self.Institution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InstitutionType">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Institution">
+        <PropertyRef Name="TypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Institution">
+    <End Role="Institution" Type="Self.Institution" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="InstitutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BookAppDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Genders" EntityType="Self.Gender" />
+    <EntitySet Name="Institutions" EntityType="Self.Institution" />
+    <EntitySet Name="InstitutionTypes" EntityType="Self.InstitutionType" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <AssociationSet Name="FK_Student_Gender" Association="Self.FK_Student_Gender">
+      <End Role="Gender" EntitySet="Genders" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Institution_InstitutionType" Association="Self.FK_Institution_InstitutionType">
+      <End Role="InstitutionType" EntitySet="InstitutionTypes" />
+      <End Role="Institution" EntitySet="Institutions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Institution" Association="Self.FK_Student_Institution">
+      <End Role="Institution" EntitySet="Institutions" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <EntitySet Name="Roles" EntityType="BookAppDbModel.Role" />
+    <EntitySet Name="UserRoleMappings" EntityType="BookAppDbModel.UserRoleMapping" />
+    <AssociationSet Name="FK__UserRoleM__RoleI__4E88ABD4" Association="BookAppDbModel.FK__UserRoleM__RoleI__4E88ABD4">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRoleMapping" EntitySet="UserRoleMappings" />
+    </AssociationSet>
+    <EntitySet Name="Books" EntityType="BookAppDbModel.Book" />
+    <EntitySet Name="Categories" EntityType="BookAppDbModel.Category" />
+    <EntitySet Name="Conditions" EntityType="BookAppDbModel.Condition" />
+    <AssociationSet Name="FK_Book_Category" Association="BookAppDbModel.FK_Book_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Book" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Book_Condition" Association="BookAppDbModel.FK_Book_Condition">
+      <End Role="Condition" EntitySet="Conditions" />
+      <End Role="Book" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Book_Institution" Association="BookAppDbModel.FK_Book_Institution">
+      <End Role="Institution" EntitySet="Institutions" />
+      <End Role="Book" EntitySet="Books" />
+    </AssociationSet>
+    <EntitySet Name="Campus1" EntityType="BookAppDbModel.Campus" />
+    <EntitySet Name="Departments" EntityType="BookAppDbModel.Department" />
+    <AssociationSet Name="FK_Campus_Institution" Association="BookAppDbModel.FK_Campus_Institution">
+      <End Role="Institution" EntitySet="Institutions" />
+      <End Role="Campu" EntitySet="Campus1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Department_Campus" Association="BookAppDbModel.FK_Department_Campus">
+      <End Role="Campu" EntitySet="Campus1" />
+      <End Role="Department" EntitySet="Departments" />
+    </AssociationSet>
+    <EntitySet Name="Sellers" EntityType="BookAppDbModel.Seller" />
+    <AssociationSet Name="FK_Seller_Book" Association="BookAppDbModel.FK_Seller_Book">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Seller" EntitySet="Sellers" />
+    </AssociationSet>
+    <EntitySet Name="Orders" EntityType="BookAppDbModel.Order" />
+    <EntitySet Name="OrderDetails" EntityType="BookAppDbModel.OrderDetail" />
+    <EntitySet Name="Users" EntityType="BookAppDbModel.User" />
+    <AssociationSet Name="FK_User_Gender" Association="BookAppDbModel.FK_User_Gender">
+      <End Role="Gender" EntitySet="Genders" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Institution" Association="BookAppDbModel.FK_User_Institution">
+      <End Role="Institution" EntitySet="Institutions" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRoleMapping_User" Association="BookAppDbModel.FK_UserRoleMapping_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRoleMapping" EntitySet="UserRoleMappings" />
+    </AssociationSet>
+    <EntitySet Name="Rentals" EntityType="BookAppDbModel.Rental" />
+    <AssociationSet Name="FK_Rental_Book" Association="BookAppDbModel.FK_Rental_Book">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Rental" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rental_User" Association="BookAppDbModel.FK_Rental_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Rental" EntitySet="Rentals" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserRoleMappings" Relationship="BookAppDbModel.FK__UserRoleM__RoleI__4E88ABD4" FromRole="Role" ToRole="UserRoleMapping" />
+  </EntityType>
+  <EntityType Name="UserRoleMapping">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="RoleId" Type="Int32" />
+    <NavigationProperty Name="Role" Relationship="BookAppDbModel.FK__UserRoleM__RoleI__4E88ABD4" FromRole="UserRoleMapping" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="BookAppDbModel.FK_UserRoleMapping_User" FromRole="UserRoleMapping" ToRole="User" />
+  </EntityType>
+  <Association Name="FK__UserRoleM__RoleI__4E88ABD4">
+    <End Type="BookAppDbModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="BookAppDbModel.UserRoleMapping" Role="UserRoleMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRoleMapping">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <Property Name="ISBN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Author" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Edition" Type="Int32" />
+    <Property Name="Publisher" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModuleCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ConditionId" Type="Int32" />
+    <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Category" Relationship="BookAppDbModel.FK_Book_Category" FromRole="Book" ToRole="Category" />
+    <NavigationProperty Name="Condition" Relationship="BookAppDbModel.FK_Book_Condition" FromRole="Book" ToRole="Condition" />
+    <NavigationProperty Name="Institution" Relationship="BookAppDbModel.FK_Book_Institution" FromRole="Book" ToRole="Institution" />
+    <Property Name="Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Sellers" Relationship="BookAppDbModel.FK_Seller_Book" FromRole="Book" ToRole="Seller" />
+    <NavigationProperty Name="Rentals" Relationship="BookAppDbModel.FK_Rental_Book" FromRole="Book" ToRole="Rental" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Books" Relationship="BookAppDbModel.FK_Book_Category" FromRole="Category" ToRole="Book" />
+  </EntityType>
+  <EntityType Name="Condition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Condition1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Books" Relationship="BookAppDbModel.FK_Book_Condition" FromRole="Condition" ToRole="Book" />
+  </EntityType>
+  <Association Name="FK_Book_Category">
+    <End Type="BookAppDbModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="BookAppDbModel.Book" Role="Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Book_Condition">
+    <End Type="BookAppDbModel.Condition" Role="Condition" Multiplicity="0..1" />
+    <End Type="BookAppDbModel.Book" Role="Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Condition">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="ConditionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Book_Institution">
+    <End Type="BookAppDbModel.Institution" Role="Institution" Multiplicity="1" />
+    <End Type="BookAppDbModel.Book" Role="Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="InstitutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Campus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Institution" Relationship="BookAppDbModel.FK_Campus_Institution" FromRole="Campu" ToRole="Institution" />
+    <NavigationProperty Name="Departments" Relationship="BookAppDbModel.FK_Department_Campus" FromRole="Campu" ToRole="Department" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CampusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Campu" Relationship="BookAppDbModel.FK_Department_Campus" FromRole="Department" ToRole="Campu" />
+  </EntityType>
+  <Association Name="FK_Campus_Institution">
+    <End Type="BookAppDbModel.Institution" Role="Institution" Multiplicity="1" />
+    <End Type="BookAppDbModel.Campus" Role="Campu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Campu">
+        <PropertyRef Name="InstitutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Department_Campus">
+    <End Type="BookAppDbModel.Campus" Role="Campu" Multiplicity="1" />
+    <End Type="BookAppDbModel.Department" Role="Department" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Campu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Department">
+        <PropertyRef Name="CampusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Seller">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Subject" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Enquiry" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BookId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Book" Relationship="BookAppDbModel.FK_Seller_Book" FromRole="Seller" ToRole="Book" />
+  </EntityType>
+  <Association Name="FK_Seller_Book">
+    <End Type="BookAppDbModel.Book" Role="Book" Multiplicity="1" />
+    <End Type="BookAppDbModel.Seller" Role="Seller" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Seller">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="OrderDetailId" />
+    </Key>
+    <Property Name="OrderDetailId" Type="Int32" Nullable="false" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ItemId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ID_Number" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="GenderId" Type="Int32" Nullable="false" />
+    <Property Name="InstitutionId" Type="Int32" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
+    <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+    <Property Name="ResetPasswordCode" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Gender" Relationship="BookAppDbModel.FK_User_Gender" FromRole="User" ToRole="Gender" />
+    <NavigationProperty Name="Institution" Relationship="BookAppDbModel.FK_User_Institution" FromRole="User" ToRole="Institution" />
+    <NavigationProperty Name="UserRoleMappings" Relationship="BookAppDbModel.FK_UserRoleMapping_User" FromRole="User" ToRole="UserRoleMapping" />
+    <NavigationProperty Name="Rentals" Relationship="BookAppDbModel.FK_Rental_User" FromRole="User" ToRole="Rental" />
+  </EntityType>
+  <Association Name="FK_User_Gender">
+    <End Type="BookAppDbModel.Gender" Role="Gender" Multiplicity="1" />
+    <End Type="BookAppDbModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="GenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Institution">
+    <End Type="BookAppDbModel.Institution" Role="Institution" Multiplicity="1" />
+    <End Type="BookAppDbModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="InstitutionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRoleMapping_User">
+    <End Type="BookAppDbModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="BookAppDbModel.UserRoleMapping" Role="UserRoleMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRoleMapping">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Rental">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="BookId" Type="Int32" Nullable="false" />
+    <Property Name="GuardianName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GuardianSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GuardianID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GuardianCell" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
+    <Property Name="GuardianAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="HasPenalty" Type="Boolean" />
+    <Property Name="DateOfRent" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateOfReturn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExpectedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Book" Relationship="BookAppDbModel.FK_Rental_Book" FromRole="Rental" ToRole="Book" />
+    <NavigationProperty Name="User" Relationship="BookAppDbModel.FK_Rental_User" FromRole="Rental" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Rental_Book">
+    <End Type="BookAppDbModel.Book" Role="Book" Multiplicity="1" />
+    <End Type="BookAppDbModel.Rental" Role="Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rental">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rental_User">
+    <End Type="BookAppDbModel.User" Role="User" Multiplicity="1" />
+    <End Type="BookAppDbModel.Rental" Role="Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Rental">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

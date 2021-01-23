@@ -1,0 +1,106 @@
+﻿@model BookApp.Models.Seller
+
+@if (Session["Email"] == null)
+{
+    Response.Redirect("~/Home/Login");
+}
+else
+{
+    {
+        ViewBag.Title = "Create";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+
+
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="~/Content/Book/Style.css" rel="stylesheet" />
+        <title></title>
+
+    </head>
+    @using (Html.BeginForm("Create", "Seller", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <body>
+
+            <div class="container register-form">
+                <div class="form">
+                    <div class="note">
+                        <p>Product Enquiry: Sell Book</p>
+                    </div>
+
+                    <div class="form-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Name) } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Phone) } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Surname) } })
+                                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Email) } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Subject) } })
+                                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.Enquiry, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Enquiry) } })
+                                    @Html.ValidationMessageFor(model => model.Enquiry, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Address) } })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <button type="submit" class="btnSubmit">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </body>
+    }
+</html>
+}
+

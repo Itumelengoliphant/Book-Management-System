@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BookApp.Models.ShoppingCartModel>
+@{
+    ViewBag.Title = "BookShoppingCart";
+    decimal TotalAmount = 0.0M;
+}
+
+<h2 style="text-align:center"><u>Book Shopping Cart</u></h2><br />
+
+@using (Html.BeginForm("AddOrder", "Book", FormMethod.Post))
+{
+<table class="table-condensed" style="width:100%">
+    @foreach (var item in Model)
+    {
+        TotalAmount += item.UnitPrice;
+        <tr>
+            <td>
+                <img style="margin-left:15px" src="@Url.Content(item.ImagePath)" width="50px" height="50px" class="img-rounded" />
+            </td>
+            <td style="text-align:right">
+                @item.ItemName
+            </td>
+            <td style="text-align:right">
+                @item.Quantity
+            </td>
+            <td style="text-align:right">
+                R  @item.UnitPrice
+            </td>
+        </tr>
+    }
+    <tr style="border-top:2px solid blue">
+        <td colspan="4" style="text-align:right">
+            <br />
+
+            <h3>Total Amount </h3>
+            <hr />
+        </td>
+        <td style="text-align:right">
+            <h3> R @TotalAmount</h3>
+            <br />
+            <hr />
+            <hr />
+        </td>
+    </tr>
+
+    <tr style="text-align:right">
+        <td colspan="4">
+            <input type="submit" value="Buy" name="Buy" class="btn btn-primary" id="SaveOrder" />
+            @Html.ActionLink(" Rent", "Rental", "Create",null, new { @class = "btn btn-success fa fa-pencil-square-o" })
+
+        </td>
+    </tr>
+
+</table>
+    <br/>
+}
+
+
+

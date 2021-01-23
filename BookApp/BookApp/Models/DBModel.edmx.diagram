@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="71f2a991d01741bcad908b446048c58f" Name="Diagram1">
+        <EntityTypeShape EntityType="BookAppDbModel.Gender" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookAppDbModel.Institution" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookAppDbModel.InstitutionType" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookAppDbModel.Student" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="BookAppDbModel.FK_Student_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="BookAppDbModel.FK_Institution_InstitutionType" ManuallyRouted="false" />
+        <AssociationConnector Association="BookAppDbModel.FK_Student_Institution" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BookAppDbModel.Role" Width="1.5" PointX="5.375" PointY="7.125" />
+        <EntityTypeShape EntityType="BookAppDbModel.UserRoleMapping" Width="1.5" PointX="7.625" PointY="6.875" />
+        <AssociationConnector Association="BookAppDbModel.FK__UserRoleM__RoleI__4E88ABD4" />
+        <EntityTypeShape EntityType="BookAppDbModel.Book" Width="1.5" PointX="8.25" PointY="0.75" />
+        <EntityTypeShape EntityType="BookAppDbModel.Category" Width="1.5" PointX="6" PointY="12.875" />
+        <EntityTypeShape EntityType="BookAppDbModel.Condition" Width="1.5" PointX="6" PointY="15.5" />
+        <AssociationConnector Association="BookAppDbModel.FK_Book_Category" />
+        <AssociationConnector Association="BookAppDbModel.FK_Book_Condition" />
+        <AssociationConnector Association="BookAppDbModel.FK_Book_Institution" />
+        <EntityTypeShape EntityType="BookAppDbModel.Campus" Width="1.5" PointX="5.25" PointY="17.875" />
+        <EntityTypeShape EntityType="BookAppDbModel.Department" Width="1.5" PointX="7.5" PointY="18.125" />
+        <AssociationConnector Association="BookAppDbModel.FK_Campus_Institution" />
+        <AssociationConnector Association="BookAppDbModel.FK_Department_Campus" />
+        <EntityTypeShape EntityType="BookAppDbModel.Seller" Width="1.5" PointX="10.5" PointY="1.375" />
+        <AssociationConnector Association="BookAppDbModel.FK_Seller_Book" />
+        <EntityTypeShape EntityType="BookAppDbModel.Order" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="BookAppDbModel.OrderDetail" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="BookAppDbModel.User" Width="1.5" PointX="10.25" PointY="6.875" />
+        <AssociationConnector Association="BookAppDbModel.FK_User_Gender" />
+        <AssociationConnector Association="BookAppDbModel.FK_User_Institution" />
+        <AssociationConnector Association="BookAppDbModel.FK_UserRoleMapping_User" />
+        <EntityTypeShape EntityType="BookAppDbModel.Rental" Width="1.5" PointX="12.5" PointY="5.125" />
+        <AssociationConnector Association="BookAppDbModel.FK_Rental_Book" />
+        <AssociationConnector Association="BookAppDbModel.FK_Rental_User" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

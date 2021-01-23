@@ -1,0 +1,170 @@
+﻿@model BookApp.Models.Rental
+
+@if (Session["Email"] == null)
+{
+    Response.Redirect("~/Home/Login");
+}
+else
+{
+
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="~/Content/Book/Style.css" rel="stylesheet" />
+
+        <title></title>
+    </head>
+    @if (ViewBag.SetMessage != "")
+    {
+        <div class="text-danger">*@ViewBag.SetMessage</div>
+    }
+
+    @using (Html.BeginForm("Create", "Rental", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <body>
+            <div class="container register-form">
+                <div class="form">
+                    <div class="note">
+                        <p>Rent A Book</p>
+                    </div>
+
+                    <div class="form-content">
+                        <div class="row">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p>User Renting</p>
+                                    @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Book Rented</p>
+                                @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="container register-form">
+                <div class="form">
+                    <div class="note">
+                        <p>Guardian Details</p>
+                    </div>
+
+                    <div class="form-content">
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    @Html.EditorFor(model => model.GuardianSurname, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.GuardianSurname) } })
+                                    @Html.ValidationMessageFor(model => model.GuardianSurname, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.GuardianID, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.GuardianID) } })
+                                    @Html.ValidationMessageFor(model => model.GuardianID, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    @Html.EditorFor(model => model.GuardianName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.GuardianName) } })
+                                    @Html.ValidationMessageFor(model => model.GuardianName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.EditorFor(model => model.GuardianAddress, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.GuardianAddress) } })
+                                    @Html.ValidationMessageFor(model => model.GuardianAddress, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p>Rental Date</p>
+                                    @Html.EditorFor(model => model.DateOfRent, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.DateOfRent) } })
+                                    @Html.ValidationMessageFor(model => model.DateOfRent, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p>Date of return</p>
+                                @Html.EditorFor(model => model.DateOfReturn, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.DateOfReturn) } })
+                                @Html.ValidationMessageFor(model => model.DateOfReturn, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="col-md-6">
+                            </div>
+                            <div class="form-group">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p>Date Expected</p>
+                                    @Html.EditorFor(model => model.ExpectedDate, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p>Cellphone</p>
+                                    @Html.EditorFor(model => model.GuardianCell, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.GuardianCell) } })
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.HasPenalty, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.HasPenalty)
+                                        @Html.ValidationMessageFor(model => model.HasPenalty, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btnSubmit">Submit</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </body>
+    }
+
+
+
+    </html>
+}
+
+

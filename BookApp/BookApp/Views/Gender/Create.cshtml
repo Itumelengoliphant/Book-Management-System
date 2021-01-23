@@ -1,0 +1,64 @@
+﻿@model BookApp.Models.Gender
+
+@if (Session["Email"] == null)
+{
+    Response.Redirect("~/Home/Login");
+}
+else
+{
+    {
+        ViewBag.Title = "Create";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/Content/Book/Style.css" rel="stylesheet" />
+
+
+
+    using (Html.BeginForm("Create", "Gender", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div class="container register-form">
+            <div class="form">
+                <div class="note">
+                    <p>Gender</p>
+                </div>
+
+                <div class="form-content">
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>Add Gender</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Gender1, "Gender" ,htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-5">
+                                @Html.EditorFor(model => model.Gender1, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Gender1, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btnSubmit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+
+}
+

@@ -1,0 +1,111 @@
+﻿@model BookApp.Models.Rental
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Rental</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.GuardianName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.GuardianName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.GuardianSurname)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.GuardianSurname)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.GuardianID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.GuardianID)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.GuardianCell)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.GuardianCell)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.GuardianAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.GuardianAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.HasPenalty)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.HasPenalty)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfRent)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.DateOfRent)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfReturn)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.DateOfReturn)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpectedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ExpectedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Book.Title)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Book.Title)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.User.FirstName)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
